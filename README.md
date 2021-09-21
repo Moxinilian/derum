@@ -1,6 +1,6 @@
 # derum
 
-Differentiable electronic music synthesizer for use within TensorFlow.
+Differentiable electronic music synthesizer for use with TensorFlow.
 
 This project is currently in development and is not complete yet.
 
