@@ -31,7 +31,6 @@ def build_release_filter(adsr_control, release_filter_len, automation_rate):
     rslope = adsr_control[:,5]
     t = tf.repeat(tf.range(release_filter_len, dtype=tf.float32) / automation_rate, adsr_control.shape[0])
     t = tf.reshape(t, (adsr_control.shape[0], release_filter_len))
-    print(t)
     return tf.nn.relu(s * (1 - (tf.exp(rslope/r * t) - 1) / (tf.exp(rslope) - 1)))
 
 def global_envelope_v2(notes, adsr_control, automation_len, automation_rate):
