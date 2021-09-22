@@ -8,7 +8,6 @@ FREQ_NOTES = np.array([440 * (2 ** (1/12)) ** n for n in range(-46, 40)])
 
 N_NOTES = len(FREQ_NOTES)
 
-@tf.function
 def derum(notes, note_envelope, detune, wavetable, n_samples, sample_rate):
     """
     Generates an output audio signal from notes, envelope filter,
