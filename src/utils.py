@@ -14,13 +14,26 @@ def right_handed_conv(inp, filt):
     """
 
     with tf.name_scope("right_handed_conv"):
-        output = tf.zeros(inp.shape)
+        def apply_conv(x):
+            inp, filt = x
+            filt = tf.concat([tf.zeros((filt.shape[0] + 1,)), filt], axis=0)
+            filt = tf.reverse(filt, [0])
+
+            inp_reshaped = tf.reshape(inp, (1, inp.shape[0], 1))
+            filt_reshaped = tf.reshape(filt, (filt.shape[0], 1, 1))
+
+            conv = tf.nn.conv1d(inp_reshaped, filt_reshaped, [1], "SAME")
+
+            return tf.reshape(conv, inp.shape)
+
+        output_spec = tf.TensorSpec((inp.shape[1],), dtype=inp.dtype)
+        return tf.map_fn(apply_conv, (inp, filt), fn_output_signature=output_spec)
+
         to_concat = []
         for t in range(inp.shape[1]):
             to_sum = []
-            for k in range(filt.shape[1]):
-                if t-k >= 0:
-                    to_sum.append(filt[:,k] * inp[:,t-k])
+            for k in range(min(filt.shape[1], t+1)):
+                to_sum.append(filt[:,k] * inp[:,t-k])
             to_concat.append(tf.reshape(tf.math.accumulate_n(to_sum), (inp.shape[0], 1)))
 
         return tf.concat(to_concat, axis=1)

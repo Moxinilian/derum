@@ -1,3 +1,4 @@
+from re import A
 import tensorflow as tf
 import numpy as np
 import ddsp
@@ -41,7 +42,7 @@ def global_envelope_v2(notes, adsr_control, automation_len, automation_rate):
     - global_envelope [batch, time (auto)]
     """
 
-    assert len(notes.shape) == 3 and notes.shape[2] == 1
+    assert len(notes.shape) == 2
     assert len(adsr_control.shape) == 2 and adsr_control.shape[1] == N_ADSR_CONTROL
 
     assert notes.shape[0] == adsr_control.shape[0]
@@ -49,20 +50,26 @@ def global_envelope_v2(notes, adsr_control, automation_len, automation_rate):
     notes = ddsp.core.resample(notes, automation_len, method="nearest", add_endpoint=False)
     
     notes_extended = tf.concat([notes, tf.zeros((notes.shape[0], 1))], axis=1)
-    notes_diff = notes_extended[:,:-1] - notes_extended[:,1:]
+    notes_diff = notes_extended[:,1:] - notes_extended[:,:-1]
 
     attack_decay_triggers = tf.nn.relu(notes_diff)
     release_triggers = tf.nn.relu(-notes_diff)
 
-    # NOTE: We could pick a more sensible value, surely most a+d and r are shorter
-    # than the whole output
+    # FIXME (MEMORY): We could pick a more sensible value here, surely most a+d and r
+    # are shorter than the whole output
     attack_decay_filter_len = automation_len
     release_filter_len = automation_len
 
-    # TODO
-    # Apply the attack+decay and release convolutions
-    # Formula for release:
-    # release = lambda x: s * (1 - (tf.exp(rslope/r * x) - 1) / (tf.exp(rslope) - 1))
+    attack_decay_filter = build_attack_decay_filter(adsr_control, attack_decay_filter_len, automation_rate)
+    release_filter = build_release_filter(adsr_control, release_filter_len, automation_rate)
+
+    s = tf.reshape(adsr_control[:,2], (adsr_control.shape[0], 1))
+    attack_decay_filter = attack_decay_filter - s
+
+    attack_decays = right_handed_conv(attack_decay_triggers, attack_decay_filter)
+    releases = right_handed_conv(release_triggers, release_filter)
+
+    return attack_decays + notes * s + releases, attack_decay_triggers, release_triggers, attack_decays, releases
 
 
 def global_envelope_v1(notes, note_envelope, automation_len):
