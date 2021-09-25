@@ -15,7 +15,8 @@ def build_attack_decay_filter(adsr_control, attack_decay_filter_len, automation_
     d = tf.reshape(adsr_control[:,1], (adsr_control.shape[0], 1))
     s = tf.reshape(adsr_control[:,2], (adsr_control.shape[0], 1))
     aslope = tf.reshape(adsr_control[:,4], (adsr_control.shape[0], 1))
-    t = tf.tile(tf.range(attack_decay_filter_len, dtype=tf.float32) / automation_rate, [adsr_control.shape[0]])
+    t = tf.range(attack_decay_filter_len, dtype=tf.float32) / automation_rate
+    t = tf.tile(t, [adsr_control.shape[0]])
     t = tf.reshape(t, (adsr_control.shape[0], attack_decay_filter_len))
     as_attack = (tf.exp(aslope/a * t) - 1) / (tf.exp(aslope) - 1)
     as_decay = (1 - s) * tf.exp(-DECAY_SLOPE * (t-a) / d) + s
@@ -25,7 +26,8 @@ def build_release_filter(adsr_control, release_filter_len, automation_rate):
     s = tf.reshape(adsr_control[:,2], (adsr_control.shape[0], 1))
     r = tf.reshape(adsr_control[:,3], (adsr_control.shape[0], 1))
     rslope = tf.reshape(adsr_control[:,5], (adsr_control.shape[0], 1))
-    t = tf.tile(tf.range(release_filter_len, dtype=tf.float32) / automation_rate, [adsr_control.shape[0]])
+    t = tf.range(release_filter_len, dtype=tf.float32) / automation_rate
+    t = tf.tile(t, [adsr_control.shape[0]])
     t = tf.reshape(t, (adsr_control.shape[0], release_filter_len))
     return tf.nn.relu(s * (1 - (tf.exp(rslope/r * t) - 1) / (tf.exp(rslope) - 1)))
 
