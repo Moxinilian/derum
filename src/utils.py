@@ -5,8 +5,6 @@ def right_handed_conv(inp, filt):
     Implements a convolution where the anchor is on the right of the filter.
     Values outside the bounds of the input tensors are assumed to be zero.
 
-    Do not run without XLA if you want acceptable speeds.
-
     Inputs:
     - inp [batch, time (inp)]
     - filt [batch, filter_len]
