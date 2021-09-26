@@ -24,10 +24,25 @@ The implementation of the new method is complete. I am currently measuring its b
 
 Ideally, Derum should be as expressive as modern digital synthesizers like Serum or Helm.
 
+## Building
+
+Make sure you have the latest version of `build`:
+
+```
+python3 -m pip install --upgrade build
+```
+
+Then run
+
+```
+python3 -m build
+```
+
 ## Installation
 
-In order to install DDSP, I recommend setting up a pyenv with Python 3.7.
-To install Derum, simply install latest `pip`, `tensorflow` and `ddsp` (in that order) via pip. Derum is not currently shipped in a wheel, so for now you should import the project's source directly.
+I recommend installing the project in a Python 3.7 pyenv virtual environment, as DDSP seems to have issues installing for later versions as of writing.
+
+You can install the generated wheel from the build section using pip.
 
 ## License
 
