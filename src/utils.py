@@ -11,6 +11,11 @@ def right_handed_conv(inp, filt):
     Output: [batch, time (inp)]
     """
 
+    assert len(inp.shape) == 2
+    assert len(filt.shape) == 2
+
+    assert inp.shape[0] == filt.shape[0]
+
     with tf.name_scope("right_handed_conv"):
         def apply_conv(x):
             inp, filt = x
