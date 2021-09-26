@@ -1,7 +1,6 @@
 import tensorflow as tf
 import ddsp
-
-from utils import right_handed_conv
+from derum.utils import right_handed_conv
 
 # ADSR controls: [a (secs), d (secs), s, r (secs), aslope, rslope]
 N_ADSR_CONTROL = 6
@@ -69,7 +68,7 @@ def global_envelope_v2(notes, adsr_control, automation_len, automation_rate):
     attack_decays = right_handed_conv(attack_decay_triggers, attack_decay_filter)
     releases = right_handed_conv(release_triggers, release_filter)
 
-    return attack_decays + notes * s + releases, attack_decay_triggers, release_triggers, attack_decays, releases
+    return attack_decays + notes * s + releases
 
 
 def global_envelope_v1(notes, note_envelope, automation_len):
