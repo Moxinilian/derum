@@ -21,12 +21,12 @@ The implementation of the new method is complete. I am currently measuring its b
 - Better phase control (phase currently is based on global time)
 - Additional filters used in electronic music
 
+Ideally, Derum should be as expressive as modern digital synthesizers like Serum or Helm.
+
 ## Open ideas
 
 - Individual note synthesizer that can change pitch (probably useful for memory, is it needed though?)
 - Manually optimized non-differentiable synthesizer with identical behavior for inference (probably useful for performance, maybe, measurements necessary)
-
-Ideally, Derum should be as expressive as modern digital synthesizers like Serum or Helm.
 
 ## Installation
 
