@@ -2,7 +2,7 @@
 
 Differentiable electronic music synthesizer for use with TensorFlow.
 
-This project is currently in development and is not complete yet.
+This project is currently in development but is usable. More features are to be expected.
 
 ## Why?
 

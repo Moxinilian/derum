@@ -1,6 +1,4 @@
-from re import A
 import tensorflow as tf
-import numpy as np
 import ddsp
 
 from utils import right_handed_conv
