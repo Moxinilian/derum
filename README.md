@@ -12,7 +12,7 @@ This is built upon [DDSP](https://github.com/magenta/ddsp/) from the Magenta gro
 
 ## State of the project
 
-I've been explorating the methods during the summer of 2021. A first version of the synthesizer used a very naive solution for audio envelope using only a convolution with a free filter. This proved to be too unconstrained for many use cases, so I am currently implementing a new envelope generation strategy that uses a more traditional ADSR. The difficult part is to keep it differentiable.
+I've been exploring the methods during the summer of 2021. A first version of the synthesizer used a very naive solution for audio envelope using only a convolution with a free filter. This proved to be too unconstrained for many use cases, so I have implemented a new envelope generation strategy that uses a more traditional ADSR. The difficult part was to keep it differentiable and parallel when most ADSR implementation techniques use control-flow-heavy recurrent implementations.
 
 The implementation of the new method is complete. I am currently measuring its benefits by applying it to the problem of reconstructing tracks of polyphonic music.
 
