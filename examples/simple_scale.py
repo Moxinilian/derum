@@ -3,7 +3,6 @@ import tensorflow as tf
 import numpy as np
 import scipy.io.wavfile
 
-NOTE_RATE = 16 # notes/second
 AUTOMATION_RATE = 800 # automation points/second
 SAMPLE_RATE = 44000 # samples/second
 
