@@ -18,11 +18,16 @@ The implementation of the new method is complete. I am currently measuring its b
 
 ## Roadmap
 
-- ADSR-based envelope generation.
 - Better phase control (phase currently is based on global time)
 - Additional filters used in electronic music
+- Individual note synthesizer that can change pitch (probably useful for memory, is it needed though?)
 
 Ideally, Derum should be as expressive as modern digital synthesizers like Serum or Helm.
+
+## Installation
+
+In order to install DDSP, I recommend setting up a pyenv with Python 3.7.
+To install Derum, simply install latest `pip`, `tensorflow` and `ddsp` (in that order) via pip. Derum is not currently shipped in a wheel, so for now you should import the project's source directly.
 
 ## License
 
