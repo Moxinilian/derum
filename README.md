@@ -19,6 +19,7 @@ The implementation of the new method is complete. I am currently measuring its b
 ## Roadmap
 
 - Better phase control (phase currently is based on global time)
+- LFO automations
 - Additional filters used in electronic music
 
 Ideally, Derum should be as expressive as modern digital synthesizers like Serum or Helm.
